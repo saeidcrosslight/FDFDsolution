@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+    <link rel="stylesheet" href="./node_modules/angular-ui-tree/dist/angular-ui-tree.min.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="./src/jquery-easyui-1.5.3/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="./src/jquery-easyui-1.5.3/themes/color.css">
+    <script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="./src/jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
+    <!--<script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>-->
+    <script src="./node_modules/angular/angular.js"></script>
+    <script type="text/javascript" src="./node_modules/angular-ui-tree/dist/angular-ui-tree.js"></script>
+    <script type="text/javascript">
+        $('#cc').layout('add',{
+            region: 'west',
+            width: 180,
+            title: 'West Title',
+            split: true,
+            tools: [{
+                iconCls:'icon-add',
+                handler:function(){alert('add')}
+            },{
+                iconCls:'icon-remove',
+                handler:function(){alert('remove')}
+            }]
+        });
+    </script>
+    <title>FDFD solution</title>
+</head>
+<!-- The ng-app directive -->
+<body class="easyui-layout">
+<div data-options="region:'north',title:'Header Bar',split:true, collapsible:false" style="height:100px;">
+    <div style="margin:20px 0">
+        <a href="#" class="easyui-linkbutton c1" style="width:120px">Draw Structure</a>
+        <a href="#" class="easyui-linkbutton c2" style="width:120px">Material List</a>
+        <a href="#" class="easyui-linkbutton c3" style="width:120px">Boundry List</a>
+    </div>
+</div>
+<div data-options="region:'south',title:'Output Message',split:true" style="height:300px;"></div>
+<div data-options="region:'east',title:'East',split:true" style="width:100px;"></div>
+<div data-options="region:'west',title:'File Tree',split:true" style="width:200px;"></div>
+<div data-options="region:'center',title:'Text Editor'" style="padding:5px;background:#eee;"></div>
+</body>
+
+</html>
+
