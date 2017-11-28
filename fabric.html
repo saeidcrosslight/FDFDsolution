@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="./node_modules/fabric/dist/fabric.js"></script>
+    <title>Title</title>
+</head>
+<body>
+    <canvas id="c" width="800" height="600"></canvas>
+    <canvas id="d" width="800" height="600"></canvas>
+    <input id="b" type="button" value="move to right"/>
+    <script>
+        var canvas1 = new fabric.Canvas('c');
+        var canvas2 = new fabric.Canvas('d');
+        var rect = new fabric.Rect({
+            left: 150,
+            top: 150,
+            fill: 'red',
+            width: 200,
+            height: 200,
+            angle: 45
+        });
+        var circ = new fabric.Circle({
+            left: 150,
+            top: 150,
+            fill: 'blue',
+            radius: 150,
+        });
+        $('#b').click(function () {
+            var radiusX= circ.getRadiusX();
+            var radiusY = circ.getRadiusY();
+            var cord = circ.getCoords();
+            console.log(radiusX);
+            console.log(radiusY);
+            console.log(cord);
+
+        })
+        canvas1.add(rect);
+        canvas2.add(circ);
+    </script>
+</body>
+</html>
