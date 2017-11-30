@@ -29,9 +29,9 @@
     background-color: #687074 !important;
     color: #FFF !important;
 }
-.modal-backdrop.in {
-    z-index: 0;
-}
+/*.modal-backdrop.in {*/
+    /*z-index: 0;*/
+/*}*/
 
 .css-form input.ng-invalid.ng-touched {
     background-color: #FA787E;

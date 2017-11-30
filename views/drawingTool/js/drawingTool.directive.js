@@ -5,7 +5,40 @@
 angular.module('drawingTool.directive', [])
 
     .controller('DrawingToolController', ['$scope', function($scope) {
+        var canvasWindow = new fabric.Canvas('canvasWindow');
+        canvasWindow.on('mouse:down', function(options) {
+            if (options.target) {
+                console.log('an object was clicked! ', options.target);
+            }
+        });
+        canvasWindow.on('object:moving', function(options) {
+            console.log("moving");
+            console.log(options.target.type);
+            console.log(options.target.getRadiusX());
+            console.log(options.target.getRadiusY());
+            console.log(options.target.getCoords());
+        });
+        canvasWindow.on('object:scaling', function(options) {
+            debugger;
+            $('#coordinateModal').modal('show');
+            $('.modal-backdrop').removeClass("modal-backdrop");
+            $("#coordinateModal").draggable({
+                handle: ".modal-header"
+            });
+            console.log("scaling");
+            $scope.coordinates.radiusX = options.target.getRadiusX();
+            $scope.coordinates.radiusY = options.target.getRadiusY();
+            console.log($scope.coordinates);
+            console.log($scope.coordinates.radiusX);
+            console.log($scope.coordinates.radiusY);
+            console.log(options.target.type);
+            console.log(options.target.getRadiusX());
+            console.log(options.target.getRadiusY());
+        });
+
         $scope.master = {};
+        $scope.coordinates = {};
+
 
         $scope.drawCircle = function(circle) {
             $scope.master = angular.copy(circle);
@@ -16,18 +49,20 @@ angular.module('drawingTool.directive', [])
                 radius: circle.radius,
             });
             canvasWindow.add(circ);
-            circ.on('selected', function () {
-                console.log('selected!')
-            })
-            circ.on('moving', function () {
-                console.log('moving!')
-            })
-            var radiusX= circ.getRadiusX();
-            var radiusY = circ.getRadiusY();
-            var cord = circ.getCoords();
-            console.log(radiusX);
-            console.log(radiusY);
-            console.log(cord);
+            $scope.circle = null;
+            $('#circleModal').modal('hide');
+            // circ.on('selected', function () {
+            //     console.log('selected!')
+            // })
+            // circ.on('moving', function () {
+            //     console.log('moving!')
+            // })
+            // var radiusX= circ.getRadiusX();
+            // var radiusY = circ.getRadiusY();
+            // var cord = circ.getCoords();
+            // console.log(radiusX);
+            // console.log(radiusY);
+            // console.log(cord);
         };
         $scope.drawRectangular = function(rectangular) {
             $scope.master = angular.copy(rectangular);
@@ -40,12 +75,14 @@ angular.module('drawingTool.directive', [])
                 angle: rectangular.angle
             });
             canvasWindow.add(rect);
-            rect.on('selected', function () {
-                console.log('selected!')
-            })
-            rect.on('moving', function () {
-                console.log('moving!')
-            })
+            $scope.rectangular = null;
+            $('#rectangularModal').modal('hide');
+            // rect.on('selected', function () {
+            //     console.log('selected!')
+            // })
+            // rect.on('moving', function () {
+            //     console.log('moving!')
+            // })
         };
 
         $scope.reset = function() {
