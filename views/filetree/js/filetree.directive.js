@@ -7,57 +7,57 @@ angular.module('filetree.directive', [])
     .controller('Controller', ['$scope', function($scope) {
         $scope.data = [{
             "id": 1,
-            "title": "node1",
+            "title": "folder1",
             "nodes": [
                 {
                     "id": 11,
-                    "title": "node1.1",
+                    "title": "folder1.1",
                     "nodes": [
                         {
                             "id": 111,
-                            "title": "node1.1.1",
+                            "title": "folder1.1.1",
                             "nodes": []
                         }
                     ]
                 },
                 {
                     "id": 12,
-                    "title": "node1.2",
+                    "title": "folder1.2",
                     "nodes": []
                 }
             ],
         }, {
             "id": 2,
-            "title": "node2",
+            "title": "folder2",
             "nodes": [
                 {
                     "id": 21,
-                    "title": "node2.1",
+                    "title": "folder2.1",
                     "nodes": []
                 },
                 {
                     "id": 22,
-                    "title": "node2.2",
+                    "title": "folder2.2",
                     "nodes": []
                 }
             ],
         }, {
             "id": 3,
-            "title": "node3",
+            "title": "folder3",
             "nodes": [
                 {
                     "id": 31,
-                    "title": "node3.1",
+                    "title": "folder3.1",
                     "nodes": []
                 }
             ],
         }, {
             "id": 4,
-            "title": "node4",
+            "title": "folder4",
             "nodes": [
                 {
                     "id": 41,
-                    "title": "node4.1",
+                    "title": "folder4.1",
                     "nodes": []
                 }
             ],

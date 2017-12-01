@@ -46,17 +46,29 @@
             </div>
         </div>
     </div>
-    <div class="modal fade bd-example-modal-sm" id="coordinateModal" role="dialog">
+    <div class="modal fade bd-example-modal-sm" id="cricleCoordinateModal" role="dialog">
         <div class="modal-dialog modal-sm">
 
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Modal Header</h4>
+                    <h4 class="modal-title">Circle Dimentions</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Some text in the modal.</p>
+                    <b>Radius:</b><br/>
+                    <b>RadiusX:</b> {{radius.radiusX}}<br/>
+                    <b>RadiusY:</b> {{radius.radiusY}}<br/>
+                    <b>Coordinates:</b><br/>
+                    <b>CoordinateX1: </b>{{firstCircCoordinateX}}<br/>
+                    <b>CoordinateY1: </b>{{firstCircCoordinateY}}<br/>
+                    <b>CoordinateX2: </b>{{secondCircCoordinateX}}<br/>
+                    <b>CoordinateY2: </b>{{secondCircCoordinateY}}<br/>
+                    <b>CoordinateX3: </b>{{thirdCircCoordinateX}}<br/>
+                    <b>CoordinateY3: </b>{{thirdCircCoordinateY}}<br/>
+                    <b>CoordinateX4: </b>{{forthCircCoordinateX}}<br/>
+                    <b>CoordinateY4: </b>{{forthCircCoordinateY}}<br/>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -65,7 +77,35 @@
 
         </div>
     </div>
-    asdfasdfasdfasdfasdf
-    {{coordinates.radiusX}}
-    {{coordinates.radiusY}}
+    <div class="modal fade bd-example-modal-sm" id="rectangularCoordinateModal" role="dialog">
+        <div class="modal-dialog modal-sm">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Rectangular Dimentions</h4>
+                </div>
+                <div class="modal-body">
+                    <b>Center points:</b><br/>
+                    <b>Center pointX: </b> {{rectCenterPointX}}<br/>
+                    <b>Center pointY: </b>{{rectCenterPointY}}<br/>
+                    <b>Coordinates:</b><br/>
+                    <b>CoordinateX1: </b>{{firstRectCoordinateX}}<br/>
+                    <b>CoordinateY1: </b>{{firstRectCoordinateY}}<br/>
+                    <b>CoordinateX2: </b>{{secondRectCoordinateX}}<br/>
+                    <b>CoordinateY2: </b>{{secondRectCoordinateY}}<br/>
+                    <b>CoordinateX3: </b>{{thirdRectCoordinateX}}<br/>
+                    <b>CoordinateY3: </b>{{thirdRectCoordinateY}}<br/>
+                    <b>CoordinateX4: </b>{{forthRectCoordinateX}}<br/>
+                    <b>CoordinateY4: </b>{{forthRectCoordinateY}}<br/>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
