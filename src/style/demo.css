@@ -40,3 +40,10 @@
 .css-form input.ng-valid.ng-touched {
     background-color: #78FA89;
 }
+
+.panel-body {
+    padding: 0px !important;
+}
+.panel{
+    margin: 0px !important;
+}

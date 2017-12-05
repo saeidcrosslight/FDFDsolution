@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="CrosslightApp">
+<html lang="en" ng-app="CrosslightApp" ng-controller="MainController">
 <head>
     <link rel="stylesheet" href="./node_modules/angular-ui-tree/dist/angular-ui-tree.min.css">
     <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
@@ -17,23 +17,43 @@
 </head>
 <!-- The ng-app directive -->
 <body class="easyui-layout">
-<div data-options="region:'north',title:'FDFD Solution',split:true, collapsible:false" style="height:120px; z-index: 1;">
-    <div style="margin:20px 0">
-        <select class="form-control" name="dept" style="width:200px; display: inline-block" >
-            <option selected disabled>Select a Structure</option>
-            <option value="circle">circle</option>
-            <option value="rectangular">rectangular</option>
-            <option value="oval">oval</option>
-        </select>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#circleModal">Material List</button>
-        <select class="form-control" name="dept" style="width:200px; display: inline-block" >
-            <option selected disabled>Boundary List</option>
-            <option value="PEC">PEC</option>
-            <option value="PMC">PMC</option>
-            <option value="N">N</option>
-            <option value="D">D</option>
-            <option value="PML">PML</option>
-        </select>
+<div data-options="region:'north',title:'FDFD Solution',split:true, collapsible:false" style="height:62px; z-index: 1;">
+    <div class="easyui-panel" style="padding:5px;">
+        <a href="#" class="easyui-linkbutton" data-options="plain:true">Home</a>
+        <a id="btn-edit" href="#" class="easyui-menubutton" data-options="menu:'#mm1',iconCls:'icon-edit'">Edit Structure</a>
+        <a href="#" class="easyui-menubutton" data-options="menu:'#mm2',iconCls:'icon-help'">Help</a>
+        <a href="#" class="easyui-menubutton" data-options="menu:'#mm3'">About</a>
+    </div>
+    <div id="mm1" style="width:150px;">
+        <div data-options="iconCls:'icon-undo'">Undo</div>
+        <div data-options="iconCls:'icon-redo'">Redo</div>
+        <div class="menu-sep"></div>
+        <div>Cut</div>
+        <div>Copy</div>
+        <div>Paste</div>
+        <div class="menu-sep"></div>
+        <div>
+            <span>Shapes</span>
+            <div>
+                <div ng-click="selectCircle()">Circle</div>
+                <div ng-click="selectRectangular()">Rectangular</div>
+                <div ng-click="addGrid()">Triangle</div>
+                <div>Oval</div>
+                <div class="menu-sep"></div>
+                <div>New Toolbar...</div>
+            </div>
+        </div>
+        <div data-options="iconCls:'icon-remove'">Delete</div>
+        <div>Select All</div>
+    </div>
+    <div id="mm2" style="width:100px;">
+        <div>Help</div>
+        <div>Update</div>
+        <div>About</div>
+    </div>
+    <div id="mm3" class="menu-content" style="background:#f0f0f0;padding:10px;text-align:left">
+        <img src="http://www.jeasyui.com/images/logo1.png" style="width:150px;height:50px">
+        <p style="font-size:14px;color:#444;">Try jQuery EasyUI to build your modern, interactive, javascript applications.</p>
     </div>
 </div>
 <div data-options="region:'south',title:'Output Message',split:true" style="height:300px;"></div>
@@ -49,17 +69,8 @@
 <script type="text/javascript" src="./js/app.js"></script>
 <script type="text/javascript" src="./views/filetree/js/filetree.directive.js"></script>
 <script type="text/javascript" src="./views/drawingTool/js/drawingTool.directive.js"></script>
+<script type="text/javascript" src="./views/headerMenu/js/headerMenu.directive.js"></script>
 <script type="text/javascript" src="./node_modules/fabric/dist/fabric.js"></script>
-<script>
-    $('select').change(function () {
-        if ($(this).val() == "circle") {
-            $('#circleModal').modal('show');
-        } else if ($(this).val() == "rectangular") {
-            $('#rectangularModal').modal('show');
-        }
-    });
-</script>
 </body>
-
 </html>
 

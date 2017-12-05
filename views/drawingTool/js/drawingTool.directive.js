@@ -6,11 +6,58 @@ angular.module('drawingTool.directive', [])
 
     .controller('DrawingToolController', ['$scope', '$timeout', function($scope, $timeout) {
         var canvasWindow = new fabric.Canvas('canvasWindow');
-
-
-
         $scope.master = {};
         $scope.radius = {};
+        $scope.addGrid = function () {
+            var width = canvasWindow.width;
+            var height = canvasWindow.height;
+
+            var j = 0;
+            var line = null;
+            var rect = [];
+            var size = 20;
+
+            console.log(width + ":" + height);
+
+            for (var i = 0; i < Math.ceil(width / 20); ++i) {
+                rect[0] = i * size;
+                rect[1] = 0;
+
+                rect[2] = i * size;
+                rect[3] = height;
+
+                line = null;
+                line = new fabric.Line(rect, {
+                    stroke: '#999',
+                    opacity: 0.5,
+                });
+
+                line.selectable = false;
+                canvasWindow.add(line);
+                line.sendToBack();
+
+            }
+
+            for (i = 0; i < Math.ceil(height / 20); ++i) {
+                rect[0] = 0;
+                rect[1] = i * size;
+
+                rect[2] = width;
+                rect[3] = i * size;
+
+                line = null;
+                line = new fabric.Line(rect, {
+                    stroke: '#999',
+                    opacity: 0.5,
+                });
+                line.selectable = false;
+                canvasWindow.add(line);
+                line.sendToBack();
+
+            }
+
+            canvasWindow.renderAll();
+        };
 
         $scope.drawCircle = function(circle) {
             $scope.master = angular.copy(circle);
