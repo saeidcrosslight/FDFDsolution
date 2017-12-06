@@ -1,5 +1,27 @@
-<div>
-    <canvas id="canvasWindow" width="1600" height="800"></canvas>
+<div id = "drawingContainer">
+    <!--<canvas id="canvasWindow" width="1600" height="800"></canvas>-->
+    <div class="modal fade" id="canvasModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Container Properties</h4>
+                </div>
+                <div class="modal-body">
+                    <form novalidate class="css-form">
+                        <label>R: <input class="form-control" type="number" ng-model="addedCanvas.width" required /></label><br />
+                        <label>Z: <input class="form-control" type="text" ng-model="addedCanvas.height" required /></label><br />
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" ng-click="addCanvas(addedCanvas)" value="Save" class="btn btn-default">Save</button>
+                    <button type="button" ng-click="reset()" value="Reset" class="btn btn-default">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="circleModal" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -106,5 +128,5 @@
             </div>
         </div>
     </div>
-    <input type="submit" value="Add Grid" ng-click="addGrid()"/>
+    <!--<input ng-disabled="!canvasIsAdded" type="submit" value="Add Grid" ng-click="addGrid()"/>-->
 </div>

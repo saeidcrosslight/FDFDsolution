@@ -12,4 +12,7 @@ angular
         $scope.selectRectangular = function () {
             $('#rectangularModal').modal('show');
         };
+        $scope.selectCanvas = function () {
+            $('#canvasModal').modal('show');
+        };
     }]);
