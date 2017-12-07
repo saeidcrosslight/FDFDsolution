@@ -33,13 +33,13 @@
     /*z-index: 0;*/
 /*}*/
 
-.css-form input.ng-invalid.ng-touched {
-    background-color: #FA787E;
-}
+/*.css-form input.ng-invalid.ng-touched {*/
+    /*background-color: #FA787E;*/
+/*}*/
 
-.css-form input.ng-valid.ng-touched {
-    background-color: #78FA89;
-}
+/*.css-form input.ng-valid.ng-touched {*/
+    /*background-color: #78FA89;*/
+/*}*/
 
 .panel-body {
     padding: 0px !important;

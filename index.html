@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="CrosslightApp" ng-controller="MainController">
+<html lang="en" ng-app="CrosslightApp">
 <head>
     <link rel="stylesheet" href="./node_modules/angular-ui-tree/dist/angular-ui-tree.min.css">
     <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
@@ -34,7 +34,7 @@
         <!--<div class="menu-sep"></div>-->
         <div>
             <span>Shapes</span>
-            <div>
+            <div ng-controller="DrawingToolController">
                 <div ng-show = "canvasIsAdded" ng-click="selectCircle()">Circle</div>
                 <div ng-show = "canvasIsAdded" ng-click="selectRectangular()">Rectangular</div>
                 <div ng-show = "!canvasIsAdded" ng-click="selectCanvas()">Add Canvas</div>
@@ -43,7 +43,7 @@
             </div>
         </div>
         <!--<div data-options="iconCls:'icon-remove'">Delete</div>-->
-        <div ng-show = "canvasIsAdded" ng-click="addGrid()">Add Grid</div>
+        <div ng-controller="DrawingToolController" ng-show = "canvasIsAdded" ng-click="addGrid()">Add Grid</div>
     </div>
     <div id="mm2" style="width:100px;">
         <div>Help</div>

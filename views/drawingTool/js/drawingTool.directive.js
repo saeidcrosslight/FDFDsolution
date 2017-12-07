@@ -10,13 +10,14 @@ angular.module('drawingTool.directive', [])
         $scope.radius = {};
 
         $scope.addCanvas =  function(addedCanvas) {
+            debugger;
             var canvas = document.createElement('canvas');
             canvas.setAttribute("id", "canvasWindow");
-            canvas.width = addedCanvas.width;
-            canvas.height = addedCanvas.height;
+            canvas.width = addedCanvas.width*10;
+            canvas.height = addedCanvas.height*10;
             $( "#drawingContainer" ).append(canvas);
             $rootScope.canvasIsAdded = true;
-            selectedcanvasWindow = new fabric.Canvas('canvasWindow');
+            selectedcanvasWindow = new fabric.Canvas('canvasWindow',{backgroundColor : "white"});
             $scope.addedCanvas = null;
             $('#canvasModal').modal('hide');
             selectedcanvasWindow.on('object:moving', function (e) {
@@ -39,16 +40,16 @@ angular.module('drawingTool.directive', [])
             });
             selectedcanvasWindow.on('object:modified', function(options) {
                 if (options.target && options.target.type == "circle") {
-                    $scope.radius.radiusX = options.target.getRadiusX().toFixed(2);
-                    $scope.radius.radiusY = options.target.getRadiusY().toFixed(2);
-                    $scope.firstCircCoordinateX = options.target.getCoords()[0].x.toFixed(2);
-                    $scope.firstCircCoordinateY = options.target.getCoords()[0].y.toFixed(2);
-                    $scope.secondCircCoordinateX = options.target.getCoords()[1].x.toFixed(2);
-                    $scope.secondCircCoordinateY = options.target.getCoords()[1].y.toFixed(2);
-                    $scope.thirdCircCoordinateX = options.target.getCoords()[2].x.toFixed(2);
-                    $scope.thirdCircCoordinateY = options.target.getCoords()[2].y.toFixed(2);
-                    $scope.forthCircCoordinateX = options.target.getCoords()[3].x.toFixed(2);
-                    $scope.forthCircCoordinateY = options.target.getCoords()[3].y.toFixed(2);
+                    $scope.radius.radiusX = (options.target.getRadiusX()/10).toFixed(2);
+                    $scope.radius.radiusY = (options.target.getRadiusY()/10).toFixed(2);
+                    $scope.firstCircCoordinateX = (options.target.getCoords()[0].x/10).toFixed(2);
+                    $scope.firstCircCoordinateY = (options.target.getCoords()[0].y/10).toFixed(2);
+                    $scope.secondCircCoordinateX = (options.target.getCoords()[1].x/10).toFixed(2);
+                    $scope.secondCircCoordinateY = (options.target.getCoords()[1].y/10).toFixed(2);
+                    $scope.thirdCircCoordinateX = (options.target.getCoords()[2].x/10).toFixed(2);
+                    $scope.thirdCircCoordinateY = (options.target.getCoords()[2].y/10).toFixed(2);
+                    $scope.forthCircCoordinateX = (options.target.getCoords()[3].x/10).toFixed(2);
+                    $scope.forthCircCoordinateY = (options.target.getCoords()[3].y/10).toFixed(2);
                     $timeout (function () {
                         $('#cricleCoordinateModal').modal('show');
                         $('.modal-backdrop').removeClass("modal-backdrop");
@@ -58,16 +59,16 @@ angular.module('drawingTool.directive', [])
                     }, 0)
                 }
                 if (options.target && options.target.type == "rect") {
-                    $scope.rectCenterPointX = options.target.getCenterPoint().x.toFixed(2);
-                    $scope.rectCenterPointY = options.target.getCenterPoint().y.toFixed(2);
-                    $scope.firstRectCoordinateX = options.target.getCoords()[0].x.toFixed(2);
-                    $scope.firstRectCoordinateY = options.target.getCoords()[0].y.toFixed(2);
-                    $scope.secondRectCoordinateX = options.target.getCoords()[1].x.toFixed(2);
-                    $scope.secondRectCoordinateY = options.target.getCoords()[1].y.toFixed(2);
-                    $scope.thirdRectCoordinateX = options.target.getCoords()[2].x.toFixed(2);
-                    $scope.thirdRectCoordinateY = options.target.getCoords()[2].y.toFixed(2);
-                    $scope.forthRectCoordinateX = options.target.getCoords()[3].x.toFixed(2);
-                    $scope.forthRectCoordinateY = options.target.getCoords()[3].y.toFixed(2);
+                    $scope.rectCenterPointX = (options.target.getCenterPoint().x/10).toFixed(2);
+                    $scope.rectCenterPointY = (options.target.getCenterPoint().y/10).toFixed(2);
+                    $scope.firstRectCoordinateX = (options.target.getCoords()[0].x/10).toFixed(2);
+                    $scope.firstRectCoordinateY = (options.target.getCoords()[0].y/10).toFixed(2);
+                    $scope.secondRectCoordinateX = (options.target.getCoords()[1].x/10).toFixed(2);
+                    $scope.secondRectCoordinateY = (options.target.getCoords()[1].y/10).toFixed(2);
+                    $scope.thirdRectCoordinateX = (options.target.getCoords()[2].x/10).toFixed(2);
+                    $scope.thirdRectCoordinateY = (options.target.getCoords()[2].y/10).toFixed(2);
+                    $scope.forthRectCoordinateX = (options.target.getCoords()[3].x/10).toFixed(2);
+                    $scope.forthRectCoordinateY = (options.target.getCoords()[3].y/10).toFixed(2);
                     $timeout (function () {
                         $('#rectangularCoordinateModal').modal('show');
                         $('.modal-backdrop').removeClass("modal-backdrop");
@@ -88,7 +89,7 @@ angular.module('drawingTool.directive', [])
             });
         };
 
-        $rootScope.addGrid = function () {
+        $scope.addGrid = function () {
             debugger;
             var width = selectedcanvasWindow.width;
             var height = selectedcanvasWindow.height;
@@ -147,10 +148,10 @@ angular.module('drawingTool.directive', [])
         $scope.drawCircle = function(circle) {
             $scope.master = angular.copy(circle);
             var circ = new fabric.Circle({
-                right: 0,
-                top: 0,
+                left: circle.left*10,
+                top: circle.top*10,
                 fill: circle.color,
-                radius: circle.radius,
+                radius: circle.radius*10,
             });
             selectedcanvasWindow.add(circ);
             $scope.circle = null;
@@ -160,11 +161,11 @@ angular.module('drawingTool.directive', [])
         $scope.drawRectangular = function(rectangular) {
             $scope.master = angular.copy(rectangular);
             var rect = new fabric.Rect({
-                left: 100,
-                top: 50,
+                left: rectangular.left*10,
+                top: rectangular.top*10,
                 fill: rectangular.color,
-                width: rectangular.width,
-                height: rectangular.height,
+                width: rectangular.width*10,
+                height: rectangular.height*10,
                 angle: rectangular.angle
             });
             selectedcanvasWindow.add(rect);
@@ -177,7 +178,15 @@ angular.module('drawingTool.directive', [])
             $scope.rectangular = angular.copy($scope.master);
         };
 
-
+        $scope.selectCircle = function () {
+            $('#circleModal').modal('show');
+        };
+        $scope.selectRectangular = function () {
+            $('#rectangularModal').modal('show');
+        };
+        $scope.selectCanvas = function () {
+            $('#canvasModal').modal('show');
+        };
 
 
     }])

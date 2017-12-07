@@ -10,8 +10,8 @@
                 </div>
                 <div class="modal-body">
                     <form novalidate class="css-form">
-                        <label>R: <input class="form-control" type="number" ng-model="addedCanvas.width" required /></label><br />
-                        <label>Z: <input class="form-control" type="text" ng-model="addedCanvas.height" required /></label><br />
+                        <label>R &#181m: <input class="form-control" type="number" ng-model="addedCanvas.width" required min="0" /></label><br />
+                        <label>Z &#181m: <input class="form-control" type="number" ng-model="addedCanvas.height" required min="0" /></label><br />
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -32,8 +32,20 @@
                 </div>
                 <div class="modal-body">
                     <form novalidate class="css-form">
-                        <label>radius: <input class="form-control" type="number" ng-model="circle.radius" required /></label><br />
-                        <label>color: <input class="form-control" type="text" ng-model="circle.color" required /></label><br />
+                        <label>radius &#181m: <input class="form-control" type="number" ng-model="circle.radius" required min="0" /></label><br />
+                        <label>top position &#181m: <input class="form-control" type="number" ng-model="circle.top" required min="0" /></label><br />
+                        <label>left position &#181m: <input class="form-control" type="number" ng-model="circle.left" required min="0" /></label><br />
+                        <label>color:
+                            <select class="form-control" ng-model="circle.color" required >
+                                <option value="" disabled selected>Select a color</option>
+                                <option value="blue">blue</option>
+                                <option value="green">green</option>
+                                <option value="red">red</option>
+                                <option value="black">black</option>
+                                <option value="purple">purple</option>
+                                <option value="pink">pink</option>
+                            </select>
+                        </label>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -54,10 +66,22 @@
                 </div>
                 <div class="modal-body">
                     <form novalidate class="css-form">
-                        <label>width: <input class="form-control" type="number" ng-model="rectangular.width" required /></label><br />
-                        <label>height: <input class="form-control" type="number" ng-model="rectangular.height" required /></label><br />
-                        <label>angle: <input class="form-control" type="number" ng-model="rectangular.angle" required /></label><br />
-                        <label>color: <input class="form-control" type="text" ng-model="rectangular.color" required /></label><br />
+                        <label>width &#181m: <input class="form-control" type="number" ng-model="rectangular.width" required min="0"/></label><br />
+                        <label>height &#181m: <input class="form-control" type="number" ng-model="rectangular.height" required min="0"/></label><br />
+                        <label>angle: <input class="form-control" type="number" ng-model="rectangular.angle" required min="0"/></label><br />
+                        <label>top position &#181m: <input class="form-control" type="number" ng-model="rectangular.top" required min="0" /></label><br />
+                        <label>left position &#181m: <input class="form-control" type="number" ng-model="rectangular.left" required min="0" /></label><br />
+                        <label>color:
+                            <select class="form-control" ng-model="rectangular.color" required >
+                                <option value="" disabled selected>Select a color</option>
+                                <option value="blue">blue</option>
+                                <option value="green">green</option>
+                                <option value="red">red</option>
+                                <option value="black">black</option>
+                                <option value="purple">purple</option>
+                                <option value="pink">pink</option>
+                        </select>
+                        </label><br />
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -79,17 +103,17 @@
                 </div>
                 <div class="modal-body">
                     <b>Radius:</b><br/>
-                    <b>RadiusX:</b> {{radius.radiusX}}<br/>
-                    <b>RadiusY:</b> {{radius.radiusY}}<br/>
+                    <b>RadiusX:</b> {{radius.radiusX}} &#181m<br/>
+                    <b>RadiusY:</b> {{radius.radiusY}} &#181m<br/>
                     <b>Coordinates:</b><br/>
-                    <b>CoordinateX1: </b>{{firstCircCoordinateX}}<br/>
-                    <b>CoordinateY1: </b>{{firstCircCoordinateY}}<br/>
-                    <b>CoordinateX2: </b>{{secondCircCoordinateX}}<br/>
-                    <b>CoordinateY2: </b>{{secondCircCoordinateY}}<br/>
-                    <b>CoordinateX3: </b>{{thirdCircCoordinateX}}<br/>
-                    <b>CoordinateY3: </b>{{thirdCircCoordinateY}}<br/>
-                    <b>CoordinateX4: </b>{{forthCircCoordinateX}}<br/>
-                    <b>CoordinateY4: </b>{{forthCircCoordinateY}}<br/>
+                    <b>CoordinateX1: </b>{{firstCircCoordinateX}} &#181m<br/>
+                    <b>CoordinateY1: </b>{{firstCircCoordinateY}} &#181m<br/>
+                    <b>CoordinateX2: </b>{{secondCircCoordinateX}} &#181m<br/>
+                    <b>CoordinateY2: </b>{{secondCircCoordinateY}} &#181m<br/>
+                    <b>CoordinateX3: </b>{{thirdCircCoordinateX}} &#181m<br/>
+                    <b>CoordinateY3: </b>{{thirdCircCoordinateY}} &#181m<br/>
+                    <b>CoordinateX4: </b>{{forthCircCoordinateX}} &#181m<br/>
+                    <b>CoordinateY4: </b>{{forthCircCoordinateY}} &#181m<br/>
 
                 </div>
                 <div class="modal-footer">
@@ -110,17 +134,17 @@
                 </div>
                 <div class="modal-body">
                     <b>Center points:</b><br/>
-                    <b>Center pointX: </b> {{rectCenterPointX}}<br/>
-                    <b>Center pointY: </b>{{rectCenterPointY}}<br/>
+                    <b>Center pointX: </b> {{rectCenterPointX}} &#181m<br/>
+                    <b>Center pointY: </b>{{rectCenterPointY}} &#181m<br/>
                     <b>Coordinates:</b><br/>
-                    <b>CoordinateX1: </b>{{firstRectCoordinateX}}<br/>
-                    <b>CoordinateY1: </b>{{firstRectCoordinateY}}<br/>
-                    <b>CoordinateX2: </b>{{secondRectCoordinateX}}<br/>
-                    <b>CoordinateY2: </b>{{secondRectCoordinateY}}<br/>
-                    <b>CoordinateX3: </b>{{thirdRectCoordinateX}}<br/>
-                    <b>CoordinateY3: </b>{{thirdRectCoordinateY}}<br/>
-                    <b>CoordinateX4: </b>{{forthRectCoordinateX}}<br/>
-                    <b>CoordinateY4: </b>{{forthRectCoordinateY}}<br/>
+                    <b>CoordinateX1: </b>{{firstRectCoordinateX}} &#181m<br/>
+                    <b>CoordinateY1: </b>{{firstRectCoordinateY}} &#181m<br/>
+                    <b>CoordinateX2: </b>{{secondRectCoordinateX}} &#181m<br/>
+                    <b>CoordinateY2: </b>{{secondRectCoordinateY}} &#181m<br/>
+                    <b>CoordinateX3: </b>{{thirdRectCoordinateX}} &#181m<br/>
+                    <b>CoordinateY3: </b>{{thirdRectCoordinateY}} &#181m<br/>
+                    <b>CoordinateX4: </b>{{forthRectCoordinateX}} &#181m<br/>
+                    <b>CoordinateY4: </b>{{forthRectCoordinateY}} &#181m<br/>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
