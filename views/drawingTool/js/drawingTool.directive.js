@@ -196,6 +196,13 @@ angular.module('drawingTool.directive', [])
             restrict: "E",
             templateUrl: "./views/drawingTool/page/drawingTool.html"
         };
+    })
+
+    .directive('headerMenu', function() {
+        return {
+            restrict: "E",
+            templateUrl: "./views/drawingTool/page/headerMenu.html"
+        };
     });
 
 
