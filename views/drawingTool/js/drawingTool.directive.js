@@ -8,6 +8,7 @@ angular.module('drawingTool.directive', [])
         // var canvasWindow = new fabric.Canvas('canvasWindow');
         $scope.master = {};
         $scope.radius = {};
+        $scope.selectedObjects = [];
 
         $scope.addCanvas =  function(addedCanvas) {
             debugger;
@@ -87,7 +88,53 @@ angular.module('drawingTool.directive', [])
             selectedcanvasWindow.on('object:scaling', function(options) {
                 console.log("scaling");
             });
+
+            selectedcanvasWindow.on('selection:created', function (selections) {
+                debugger;
+                if (selections.target.type === 'activeSelection') {
+                    angular.forEach(selections, function (selections) {
+                        //console.log(selections);
+                        $scope.selectedObjects.push(selections);
+
+                    })
+                }
+                console.log( $scope.selectedObjects);
+            });
         };
+
+        $scope.readTextFile =  function (){
+            debugger;
+            var rawFile = new XMLHttpRequest();
+            rawFile.open("GET", "file:///src/crosslight.mac", false);
+            rawFile.onreadystatechange = function ()
+            {
+                if(rawFile.readyState === 4)
+                {
+                    if(rawFile.status === 200 || rawFile.status == 0)
+                    {
+                        var allText = rawFile.responseText;
+                        console.log(typeof (allText));
+                    }
+                }
+            }
+            rawFile.send(null);
+        }
+
+        $scope.getObjects= function () {
+            debugger;
+            var objs = selectedcanvasWindow.getObjects().map(function(o) {
+                return o.set('active', true);
+            });
+
+            var group = new fabric.Group(objs, {
+                originX: 'center',
+                originY: 'center'
+            });
+
+            selectedcanvasWindow._activeObject = null;
+
+            selectedcanvasWindow.setActiveObject(group.setCoords()).renderAll();
+        }
 
         $scope.addGrid = function () {
             debugger;
