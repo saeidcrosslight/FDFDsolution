@@ -113,11 +113,45 @@ angular.module('drawingTool.directive', [])
                     if(rawFile.status === 200 || rawFile.status == 0)
                     {
                         var allText = rawFile.responseText;
-                        console.log(typeof (allText));
+                        populateMaterialCombo(allText);
+                        console.log($scope.materialArr);
                     }
                 }
             }
             rawFile.send(null);
+        }
+
+        populateMaterialCombo = function (materialFileContent) {
+            console.log("==========================");
+
+            var extractedArr = materialFileContent.match(/(?:material_lib)([^]+?)(?:end_library)/g);
+            $scope.materialArr = [];
+            extractedArr.forEach(function (item,index) {
+                var material = {};
+                if(item.indexOf("name")>-1){
+                    var nameIndex = item.indexOf("name"),
+                        firsSpaceIndex = nameIndex + item.substring(nameIndex).indexOf(" ");
+                    material.name = item.substring(nameIndex +5,firsSpaceIndex);
+                    if(item.indexOf("var_symbol1")>-1){
+                        var symbol1Index = item.indexOf("var_symbol1"),
+                            firsSpaceIndex = symbol1Index + item.substring(symbol1Index).indexOf(" ");
+                           // firsNewLineIndex = symbol1Index + item.substring(symbol1Index).indexOf(/n);
+
+                        material.symbol1 = item.substring(symbol1Index +12,firsSpaceIndex);
+                    }
+                    if(item.indexOf("var_symbol2")>-1){
+                        var symbol2Index = item.indexOf("var_symbol2"),
+                            firsSpaceIndex = symbol2Index + item.substring(symbol2Index).indexOf(" ");
+                        material.symbol2 = item.substring(symbol2Index +12,firsSpaceIndex);
+                    }
+                    if(item.indexOf("var_symbol3")>-1){
+                        var symbol3Index = item.indexOf("var_symbol3"),
+                            firsSpaceIndex = symbol3Index + item.substring(symbol3Index).indexOf(" ");
+                        material.symbol3 = item.substring(symbol3Index +12,firsSpaceIndex);
+                    }
+                    $scope.materialArr.push(material);
+                }
+            })
         }
 
         $scope.getObjects= function () {
