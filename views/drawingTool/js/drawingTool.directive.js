@@ -9,9 +9,12 @@ angular.module('drawingTool.directive', [])
         $scope.master = {};
         $scope.radius = {};
         $scope.selectedObjects = [];
+        var morefile
+        var macfile
 
         $scope.addCanvas =  function(addedCanvas) {
             debugger;
+            readCrosslightAndMoreFile();
             var canvas = document.createElement('canvas');
             canvas.setAttribute("id", "canvasWindow");
             canvas.width = addedCanvas.width*10;
@@ -80,25 +83,22 @@ angular.module('drawingTool.directive', [])
                 }
             });
 
-            selectedcanvasWindow.on('object:moving', function(options) {
-                console.log("moving");
-                console.log(options.target.type);
-            });
-
-            selectedcanvasWindow.on('object:scaling', function(options) {
-                console.log("scaling");
-            });
+            // selectedcanvasWindow.on('object:moving', function(options) {
+            //     console.log("moving");
+            // });
+            //
+            // selectedcanvasWindow.on('object:scaling', function(options) {
+            //     console.log("scaling");
+            // });
 
             selectedcanvasWindow.on('selection:created', function (selections) {
                 debugger;
                 if (selections.target.type === 'activeSelection') {
                     angular.forEach(selections, function (selections) {
-                        //console.log(selections);
                         $scope.selectedObjects.push(selections);
 
                     })
                 }
-                console.log( $scope.selectedObjects);
             });
         };
 
@@ -114,16 +114,51 @@ angular.module('drawingTool.directive', [])
                     {
                         var allText = rawFile.responseText;
                         populateMaterialCombo(allText);
-                        console.log($scope.materialArr);
                     }
                 }
             }
             rawFile.send(null);
         }
 
-        populateMaterialCombo = function (materialFileContent) {
-            console.log("==========================");
+        readCrosslightFile =  function (){
+            var rawFile1 = new XMLHttpRequest();
+            rawFile1.open("GET", "file:///src/crosslight.mac", false);
+            rawFile1.onreadystatechange = function ()
+            {
+                if(rawFile1.readyState === 4)
+                {
+                    if(rawFile1.status === 200 || rawFile1.status == 0)
+                    {
+                        var allText1 = rawFile1.responseText;
+                        macfile = allText1;
+                    }
+                }
+            }
+            rawFile1.send(null);
+            var rawFile2 = new XMLHttpRequest();
+            rawFile2.open("GET", "file:///src/more.mac", false);
+            rawFile2.onreadystatechange = function ()
+            {
+                if(rawFile2.readyState === 4)
+                {
+                    if(rawFile2.status === 200 || rawFile2.status == 0)
+                    {
+                        var allText2 = rawFile2.responseText;
+                        morefile = allText2;
+                    }
+                }
+            }
+            rawFile2.send(null);
+        }
 
+        readCrosslightAndMoreFile = function () {
+            readCrosslightFile();
+            var allText = morefile + macfile;
+            populateMaterialCombo(allText);
+            console.log($scope.materialArr);
+        }
+
+        populateMaterialCombo = function (materialFileContent) {
             var extractedArr = materialFileContent.match(/(?:material_lib)([^]+?)(?:end_library)/g);
             $scope.materialArr = [];
             extractedArr.forEach(function (item,index) {
@@ -135,19 +170,33 @@ angular.module('drawingTool.directive', [])
                     if(item.indexOf("var_symbol1")>-1){
                         var symbol1Index = item.indexOf("var_symbol1"),
                             firsSpaceIndex = symbol1Index + item.substring(symbol1Index).indexOf(" ");
-                           // firsNewLineIndex = symbol1Index + item.substring(symbol1Index).indexOf(/n);
-
-                        material.symbol1 = item.substring(symbol1Index +12,firsSpaceIndex);
+                            firsNewLineIndex = symbol1Index + item.substring(symbol1Index).indexOf("\n");
+                            if(firsSpaceIndex<firsNewLineIndex){
+                                material.symbol1 = item.substring(symbol1Index +12,firsSpaceIndex);
+                            } else if(firsSpaceIndex>firsNewLineIndex){
+                                material.symbol1 = item.substring(symbol1Index +12,firsNewLineIndex);
+                            }
                     }
                     if(item.indexOf("var_symbol2")>-1){
                         var symbol2Index = item.indexOf("var_symbol2"),
-                            firsSpaceIndex = symbol2Index + item.substring(symbol2Index).indexOf(" ");
-                        material.symbol2 = item.substring(symbol2Index +12,firsSpaceIndex);
+                            firsSpaceIndex = symbol2Index + item.substring(symbol2Index).indexOf(" "),
+                            firsNewLineIndex = symbol2Index + item.substring(symbol2Index).indexOf("\n");
+                        if(firsSpaceIndex<firsNewLineIndex){
+                            material.symbol2 = item.substring(symbol2Index +12,firsSpaceIndex);
+                        } else if(firsSpaceIndex>firsNewLineIndex){
+                            material.symbol2 = item.substring(symbol2Index +12,firsNewLineIndex);
+                        }
                     }
                     if(item.indexOf("var_symbol3")>-1){
                         var symbol3Index = item.indexOf("var_symbol3"),
-                            firsSpaceIndex = symbol3Index + item.substring(symbol3Index).indexOf(" ");
-                        material.symbol3 = item.substring(symbol3Index +12,firsSpaceIndex);
+                            firsSpaceIndex = symbol3Index + item.substring(symbol3Index).indexOf(" "),
+                            firsNewLineIndex = symbol3Index + item.substring(symbol3Index).indexOf("\n");
+                        if(firsSpaceIndex<firsNewLineIndex){
+                            material.symbol3 = item.substring(symbol3Index +12,firsSpaceIndex);
+                        } else if(firsSpaceIndex>firsNewLineIndex){
+                            material.symbol3 = item.substring(symbol3Index +12,firsNewLineIndex);
+                        }
+
                     }
                     $scope.materialArr.push(material);
                 }
@@ -180,7 +229,6 @@ angular.module('drawingTool.directive', [])
             var rect = [];
             var size = 20;
 
-            console.log(width + ":" + height);
 
             for (var i = 0; i < Math.ceil(width / 20); ++i) {
                 rect[0] = i * size;
