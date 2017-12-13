@@ -102,22 +102,15 @@ angular.module('drawingTool.directive', [])
             });
         };
 
-        $scope.readTextFile =  function (){
-            debugger;
-            var rawFile = new XMLHttpRequest();
-            rawFile.open("GET", "file:///src/crosslight.mac", false);
-            rawFile.onreadystatechange = function ()
-            {
-                if(rawFile.readyState === 4)
-                {
-                    if(rawFile.status === 200 || rawFile.status == 0)
-                    {
-                        var allText = rawFile.responseText;
-                        populateMaterialCombo(allText);
-                    }
+        $scope.readWithfs = function () {
+            var fs = require('fs');
+            fs.readFile('./src/crosslight.mac', function (err,data) {
+                if(err){
+                    console.log(err);
+                }else{
+                    console.log(data.toString());
                 }
-            }
-            rawFile.send(null);
+            })
         }
 
         readCrosslightFile =  function (){
@@ -316,6 +309,8 @@ angular.module('drawingTool.directive', [])
         $scope.selectCanvas = function () {
             $('#canvasModal').modal('show');
         };
+
+
 
 
     }])
