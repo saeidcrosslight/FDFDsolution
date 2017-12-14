@@ -5,6 +5,7 @@
 angular.module('drawingTool.directive', [])
 
     .controller('DrawingToolController', ['$scope', '$timeout', '$rootScope', function($scope, $timeout, $rootScope) {
+        $scope.createdObjects = [];
         // var canvasWindow = new fabric.Canvas('canvasWindow');
         $scope.master = {};
         $scope.radius = {};
@@ -111,7 +112,20 @@ angular.module('drawingTool.directive', [])
                     console.log(data.toString());
                 }
             })
-        }
+        };
+
+        $scope.writeWithfs = function () {
+            debugger;
+            var fs = require('fs');
+            fs.writeFile("./outputfiles/test.geo", $scope.circle.left, function(err) {
+                if(err) {
+                    return console.log(err);
+                }
+
+                console.log("The file was saved!");
+            });
+
+        };
 
         readCrosslightFile =  function (){
             var rawFile1 = new XMLHttpRequest();
@@ -142,7 +156,7 @@ angular.module('drawingTool.directive', [])
                 }
             }
             rawFile2.send(null);
-        }
+        };
 
         readCrosslightAndMoreFile = function () {
             readCrosslightFile();
@@ -196,21 +210,21 @@ angular.module('drawingTool.directive', [])
             })
         }
 
-        $scope.getObjects= function () {
-            debugger;
-            var objs = selectedcanvasWindow.getObjects().map(function(o) {
-                return o.set('active', true);
-            });
-
-            var group = new fabric.Group(objs, {
-                originX: 'center',
-                originY: 'center'
-            });
-
-            selectedcanvasWindow._activeObject = null;
-
-            selectedcanvasWindow.setActiveObject(group.setCoords()).renderAll();
-        }
+        // $scope.getObjects= function () {
+        //     debugger;
+        //     var objs = selectedcanvasWindow.getObjects().map(function(o) {
+        //         return o.set('active', true);
+        //     });
+        //
+        //     var group = new fabric.Group(objs, {
+        //         originX: 'center',
+        //         originY: 'center'
+        //     });
+        //
+        //     selectedcanvasWindow._activeObject = null;
+        //
+        //     selectedcanvasWindow.setActiveObject(group.setCoords()).renderAll();
+        // }
 
         $scope.addGrid = function () {
             debugger;
@@ -263,11 +277,14 @@ angular.module('drawingTool.directive', [])
             selectedcanvasWindow.renderAll();
         };
 
-        $scope.removeGrid =function () {
-
-        };
+        // $scope.removeGrid =function () {
+        //
+        // };
 
         $scope.drawCircle = function(circle) {
+            debugger;
+            console.log(circle);
+            $scope.createdObjects.push(circle);
             $scope.master = angular.copy(circle);
             var circ = new fabric.Circle({
                 left: circle.left*10,
@@ -281,6 +298,8 @@ angular.module('drawingTool.directive', [])
         };
 
         $scope.drawRectangular = function(rectangular) {
+            debugger;
+            $scope.createdObjects.push(rectangular);
             $scope.master = angular.copy(rectangular);
             var rect = new fabric.Rect({
                 left: rectangular.left*10,
