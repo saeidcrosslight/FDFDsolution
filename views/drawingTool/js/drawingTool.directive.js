@@ -1,21 +1,20 @@
-/**
- * Created by Saeid Sadeh on 11/26/2017.
- */
-
 angular.module('drawingTool.directive', [])
 
     .controller('DrawingToolController', ['$scope', '$timeout', '$rootScope', function($scope, $timeout, $rootScope) {
-        $scope.createdObjects = [];
+        var fs = require('fs');
+
+        $scope.createdObjects = {containers:[], objects:[]};
         // var canvasWindow = new fabric.Canvas('canvasWindow');
         $scope.master = {};
         $scope.radius = {};
         $scope.selectedObjects = [];
-        var morefile
-        var macfile
+        $scope.materialNumber = 1;
+        var morefile;
+        var macfile;
 
         $scope.addCanvas =  function(addedCanvas) {
-            debugger;
-            readCrosslightAndMoreFile();
+            addedCanvas.type = "container";
+            $scope.createdObjects.containers.push(addedCanvas);
             var canvas = document.createElement('canvas');
             canvas.setAttribute("id", "canvasWindow");
             canvas.width = addedCanvas.width*10;
@@ -113,11 +112,16 @@ angular.module('drawingTool.directive', [])
                 }
             })
         };
-
+        formatMaterialFile = function (materialInfo) {
+            var ouputTextString = "";
+            materialInfo.objects.forEach(function (object) {
+                console.log(object);
+            })
+            return JSON.stringify(materialInfo);
+        }
         $scope.writeWithfs = function () {
-            debugger;
-            var fs = require('fs');
-            fs.writeFile("./outputfiles/test.geo", $scope.circle.left, function(err) {
+            var data = formatMaterialFile($scope.createdObjects);
+            fs.writeFile("./outputfiles/test.geo", data, function(err) {
                 if(err) {
                     return console.log(err);
                 }
@@ -157,13 +161,6 @@ angular.module('drawingTool.directive', [])
             }
             rawFile2.send(null);
         };
-
-        readCrosslightAndMoreFile = function () {
-            readCrosslightFile();
-            var allText = morefile + macfile;
-            populateMaterialCombo(allText);
-            console.log($scope.materialArr);
-        }
 
         populateMaterialCombo = function (materialFileContent) {
             var extractedArr = materialFileContent.match(/(?:material_lib)([^]+?)(?:end_library)/g);
@@ -209,6 +206,15 @@ angular.module('drawingTool.directive', [])
                 }
             })
         }
+
+        readCrosslightAndMoreFile = function () {
+            debugger;
+            readCrosslightFile();
+            var allText = morefile + macfile;
+            populateMaterialCombo(allText);
+            console.log($scope.materialArr);
+        }
+        readCrosslightAndMoreFile();
 
         // $scope.getObjects= function () {
         //     debugger;
@@ -282,9 +288,10 @@ angular.module('drawingTool.directive', [])
         // };
 
         $scope.drawCircle = function(circle) {
-            debugger;
-            console.log(circle);
-            $scope.createdObjects.push(circle);
+            circle.type = "circle";
+            circle.materialNumber = $scope.materialNumber;
+            $scope.createdObjects.objects.push(circle);
+            $scope.materialNumber++;
             $scope.master = angular.copy(circle);
             var circ = new fabric.Circle({
                 left: circle.left*10,
@@ -298,8 +305,10 @@ angular.module('drawingTool.directive', [])
         };
 
         $scope.drawRectangular = function(rectangular) {
-            debugger;
-            $scope.createdObjects.push(rectangular);
+            rectangular.type = "rectangular";
+            rectangular.materialNumber = $scope.materialNumber;
+            $scope.createdObjects.objects.push(rectangular);
+            $scope.materialNumber++;
             $scope.master = angular.copy(rectangular);
             var rect = new fabric.Rect({
                 left: rectangular.left*10,
@@ -328,10 +337,6 @@ angular.module('drawingTool.directive', [])
         $scope.selectCanvas = function () {
             $('#canvasModal').modal('show');
         };
-
-
-
-
     }])
 
     .directive('drawingTool', function() {
@@ -347,5 +352,3 @@ angular.module('drawingTool.directive', [])
             templateUrl: "./views/drawingTool/page/headerMenu.html"
         };
     });
-
-
