@@ -115,17 +115,55 @@ angular.module('drawingTool.directive', [])
         formatMaterialFile = function (materialInfo) {
             var ouputTextString = "";
             materialInfo.objects.forEach(function (object) {
+                if(object.selectedTestMaterial.symbol1){
+                    var symbol1 = "var_symbol1="+object.selectedTestMaterial.symbol1+" "+"var1="+ object.selectedTestMaterial.symbol1Value
+                }else{
+                    symbol1 ="";
+                }
+                if(object.selectedTestMaterial.symbol2){
+                    var symbol2 = "var_symbol2="+object.selectedTestMaterial.symbol2+" "+"var2="+ object.selectedTestMaterial.symbol2Value
+                }else{
+                    symbol2 ="";
+                }
+                if(object.selectedTestMaterial.symbol3){
+                    var symbol3 = "var_symbol3="+object.selectedTestMaterial.symbol3+" "+"var3="+ object.selectedTestMaterial.symbol3Value
+                }else{
+                    symbol3 ="";
+                }
+                var objectString = "material_lib name="+object.selectedTestMaterial.name+"  mater="+object.materialNumber+" "+symbol1+" "+symbol2+" "+symbol3;
+                var newObjectString = "";
+                var maxCharacterAllowed = 80;
+                var objectStringArray = objectString.split(" ");
+                objectStringArray.forEach(function (e) {
+                    if(newObjectString.length + e.length < maxCharacterAllowed){
+                        newObjectString = newObjectString + e+" ";
+                    }else {
+                        newObjectString = newObjectString+ " &&"+"\n"+e+" ";
+                        maxCharacterAllowed = maxCharacterAllowed + 80;
+                    }
+
+                });
+                ouputTextString= ouputTextString+ newObjectString+"\n";
                 console.log(object);
-            })
-            return JSON.stringify(materialInfo);
-        }
-        $scope.writeWithfs = function () {
+            });
+            return ouputTextString;
+        };
+        $scope.writeMaterialFile = function () {
+            var data = formatMaterialFile($scope.createdObjects);
+            fs.writeFile("./outputfiles/test.mater", data, function(err) {
+                if(err) {
+                    return console.log(err);
+                }
+                console.log("The file was saved!");
+            });
+
+        };
+        $scope.writeGeoFile = function () {
             var data = formatMaterialFile($scope.createdObjects);
             fs.writeFile("./outputfiles/test.geo", data, function(err) {
                 if(err) {
                     return console.log(err);
                 }
-
                 console.log("The file was saved!");
             });
 
