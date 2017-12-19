@@ -14,10 +14,10 @@
                         <label>R &#181m: <input class="form-control" type="number" ng-model="addedCanvas.width" required min="0" /></label><br />
                         <label>Z &#181m: <input class="form-control" type="number" ng-model="addedCanvas.height" required min="0" /></label><br />
                         <label>material:
-                            <select class="form-control" ng-model="addedCanvas.selectedTestMaterial"
-                                    ng-options="material as material.name for material in materialArr">
-                                <option value="">Select Material</option>
+                            <select class="form-control" ng-init="addedCanvas.selectedTestMaterial = materialArr[55]" ng-model="addedCanvas.selectedTestMaterial"
+                                    ng-options="material.name for material in materialArr">
                             </select>
+
                             <label ng-show=addedCanvas.selectedTestMaterial.symbol1>{{addedCanvas.selectedTestMaterial.symbol1}}:<input class="form-control" type="number" ng-model="addedCanvas.selectedTestMaterial.symbol1Value" required min="0" max="1"/></label><br/>
                             <label ng-show=addedCanvas.selectedTestMaterial.symbol2>{{addedCanvas.selectedTestMaterial.symbol2}}:<input class="form-control" type="number" ng-model="addedCanvas.selectedTestMaterial.symbol2Value" required min="0" max="1"/></label><br/>
                             <label ng-show=addedCanvas.selectedTestMaterial.symbol3>{{addedCanvas.selectedTestMaterial.symbol3}}:<input class="form-control" type="number" ng-model="addedCanvas.selectedTestMaterial.symbol3Value" required min="0" max="1"/></label><br/>
@@ -45,20 +45,9 @@
                         <label>radius &#181m: <input class="form-control" type="number" ng-model="circle.radius" required min="0" /></label><br />
                         <label>top position &#181m: <input class="form-control" type="number" ng-model="circle.top" required min="0" /></label><br />
                         <label>left position &#181m: <input class="form-control" type="number" ng-model="circle.left" required min="0" /></label><br />
-                        <label>color:
-                            <select class="form-control" ng-model="circle.color" required >
-                                <option value="" disabled selected>Select a color</option>
-                                <option value="blue">blue</option>
-                                <option value="green">green</option>
-                                <option value="red">red</option>
-                                <option value="black">black</option>
-                                <option value="purple">purple</option>
-                                <option value="pink">pink</option>
-                            </select>
-                        </label><br/>
                         <label>material:
                             <select class="form-control" ng-model="circle.selectedTestMaterial"
-                                    ng-options="material as material.name for material in materialArr">
+                                    ng-options="material.name for material in materialArr">
                                 <option value="">Select Material</option>
                             </select>
                             <label ng-show=circle.selectedTestMaterial.symbol1>{{circle.selectedTestMaterial.symbol1}}:<input class="form-control" type="number" ng-model="circle.selectedTestMaterial.symbol1Value" required min="0" max="1"/></label><br/>
@@ -91,20 +80,9 @@
                         <label>angle: <input class="form-control" type="number" ng-model="rectangular.angle" required min="0"/></label><br />
                         <label>top position &#181m: <input class="form-control" type="number" ng-model="rectangular.top" required min="0" /></label><br />
                         <label>left position &#181m: <input class="form-control" type="number" ng-model="rectangular.left" required min="0" /></label><br />
-                        <label>color:
-                            <select class="form-control" ng-model="rectangular.color" required >
-                                <option value="" disabled selected>Select a color</option>
-                                <option value="blue">blue</option>
-                                <option value="green">green</option>
-                                <option value="red">red</option>
-                                <option value="black">black</option>
-                                <option value="purple">purple</option>
-                                <option value="pink">pink</option>
-                        </select>
-                        </label><br />
                         <label>material:
                             <select class="form-control" ng-model="rectangular.selectedTestMaterial"
-                                    ng-options="material as material.name for material in materialArr">
+                                    ng-options="material.name for material in materialArr">
                                 <option value="">Select Material</option>
                             </select>
                             <label ng-show=rectangular.selectedTestMaterial.symbol1>{{rectangular.selectedTestMaterial.symbol1}}:<input class="form-control" type="number" ng-model="rectangular.selectedTestMaterial.symbol1Value" required min="0" max="1"/></label><br/>

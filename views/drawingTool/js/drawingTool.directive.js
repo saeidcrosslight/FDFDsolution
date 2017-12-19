@@ -114,6 +114,38 @@ angular.module('drawingTool.directive', [])
         };
         formatMaterialFile = function (materialInfo) {
             var ouputTextString = "";
+            materialInfo.containers.forEach(function (container) {
+                console.log(container);
+                if(container.selectedTestMaterial.symbol1){
+                    var symbol1 = "var_symbol1="+container.selectedTestMaterial.symbol1+" "+"var1="+ container.selectedTestMaterial.symbol1Value
+                }else{
+                    symbol1 ="";
+                }
+                if(container.selectedTestMaterial.symbol2){
+                    var symbol2 = "var_symbol2="+container.selectedTestMaterial.symbol2+" "+"var2="+ container.selectedTestMaterial.symbol2Value
+                }else{
+                    symbol2 ="";
+                }
+                if(container.selectedTestMaterial.symbol3){
+                    var symbol3 = "var_symbol3="+container.selectedTestMaterial.symbol3+" "+"var3="+ container.selectedTestMaterial.symbol3Value
+                }else{
+                    symbol3 ="";
+                }
+                var objectString = "material_lib name="+container.selectedTestMaterial.name+ "  type="+container.type+" "+symbol1+" "+symbol2+" "+symbol3;
+                var newObjectString = "";
+                var maxCharacterAllowed = 80;
+                var objectStringArray = objectString.split(" ");
+                objectStringArray.forEach(function (e) {
+                    if(newObjectString.length + e.length < maxCharacterAllowed){
+                        newObjectString = newObjectString + e+" ";
+                    }else {
+                        newObjectString = newObjectString+ " &&"+"\n"+e+" ";
+                        maxCharacterAllowed = maxCharacterAllowed + 80;
+                    }
+
+                });
+                ouputTextString= ouputTextString+ newObjectString+"\n";
+            });
             materialInfo.objects.forEach(function (object) {
                 if(object.selectedTestMaterial.symbol1){
                     var symbol1 = "var_symbol1="+object.selectedTestMaterial.symbol1+" "+"var1="+ object.selectedTestMaterial.symbol1Value
@@ -148,23 +180,32 @@ angular.module('drawingTool.directive', [])
             });
             return ouputTextString;
         };
+
+        formatGeoFile = function (materialInfo) {
+            var ouputTextString = "";
+            materialInfo.objects.forEach(function (object) {
+                console.log(object);
+            });
+            return ouputTextString;
+        };
+
         $scope.writeMaterialFile = function () {
             var data = formatMaterialFile($scope.createdObjects);
             fs.writeFile("./outputfiles/test.mater", data, function(err) {
                 if(err) {
                     return console.log(err);
                 }
-                console.log("The file was saved!");
+                console.log("Material file was saved!");
             });
 
         };
         $scope.writeGeoFile = function () {
-            var data = formatMaterialFile($scope.createdObjects);
+            var data = formatGeoFile($scope.createdObjects);
             fs.writeFile("./outputfiles/test.geo", data, function(err) {
                 if(err) {
                     return console.log(err);
                 }
-                console.log("The file was saved!");
+                console.log("Geo file was saved!");
             });
 
         };
@@ -203,8 +244,10 @@ angular.module('drawingTool.directive', [])
         populateMaterialCombo = function (materialFileContent) {
             var extractedArr = materialFileContent.match(/(?:material_lib)([^]+?)(?:end_library)/g);
             $scope.materialArr = [];
+            var colors = ["aliceblue","antiquewhite","aqua","aquamarine","azure","beige","bisque","black","blanchedalmond","blue","blueviolet","brown","burlywood","cadetblue","chartreuse","chocolate","coral","cornflowerblue","cornsilk","crimson","cyan","darkblue","darkcyan","darkgoldenrod","darkgray","darkgrey","darkgreen","darkkhaki","darkmagenta","darkolivegreen","darkorange","darkorchid","darkred","darksalmon","darkseagreen","darkslateblue","darkslategray","darkslategrey","darkturquoise","darkviolet","deeppink","deepskyblue","dimgray","dimgrey","dodgerblue","firebrick","floralwhite","forestgreen","fuchsia","gainsboro","ghostwhite","gold","goldenrod","gray","grey","green","greenyellow","honeydew","hotpink","indianred","indigo","ivory","khaki","lavender","lavenderblush","lawngreen","lemonchiffon","lightblue","lightcoral","lightcyan","lightgoldenrodyellow","lightgray","lightgrey","lightgreen","lightpink","lightsalmon","lightseagreen","lightskyblue","lightslategray","lightslategrey","lightsteelblue","lightyellow","lime","limegreen","linen","magenta","maroon","mediumaquamarine","mediumblue","mediumorchid","mediumpurple","mediumseagreen","mediumslateblue","mediumspringgreen","mediumturquoise","mediumvioletred","midnightblue","mintcream","mistyrose","moccasin","navajowhite","navy","oldlace","olive","olivedrab","orange","orangered","orchid","palegoldenrod","palegreen","paleturquoise","palevioletred","papayawhip","peachpuff","peru","pink","plum","powderblue","purple","rebeccapurple","red","rosybrown","royalblue","saddlebrown","salmon","sandybrown","seagreen","seashell","sienna","silver","skyblue","slateblue","slategray","slategrey","snow","springgreen","steelblue","tan","teal","thistle","tomato","turquoise","violet","wheat","white","whitesmoke","yellow","yellowgreen"];
             extractedArr.forEach(function (item,index) {
                 var material = {};
+                material.color= colors[index]
                 if(item.indexOf("name")>-1){
                     var nameIndex = item.indexOf("name"),
                         firsSpaceIndex = nameIndex + item.substring(nameIndex).indexOf(" ");
@@ -334,7 +377,7 @@ angular.module('drawingTool.directive', [])
             var circ = new fabric.Circle({
                 left: circle.left*10,
                 top: circle.top*10,
-                fill: circle.color,
+                fill: circle.selectedTestMaterial.color,
                 radius: circle.radius*10,
             });
             selectedcanvasWindow.add(circ);
@@ -351,7 +394,7 @@ angular.module('drawingTool.directive', [])
             var rect = new fabric.Rect({
                 left: rectangular.left*10,
                 top: rectangular.top*10,
-                fill: rectangular.color,
+                fill: rectangular.selectedTestMaterial.color,
                 width: rectangular.width*10,
                 height: rectangular.height*10,
                 angle: rectangular.angle
